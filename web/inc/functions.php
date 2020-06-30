@@ -299,6 +299,7 @@ function MenuDisplayChildren($page, $current, $startmenu = true) {
 	$DnscryptIsInstalled = $MySB_DB->get("services", "is_installed", ["serv_name" => "DNScrypt-proxy"]);
 	$PlexMediaIsInstalled = $MySB_DB->get("services", "is_installed", ["serv_name" => "Plex Media Server"]);
 	$TautulliIsInstalled = $MySB_DB->get("services", "is_installed", ["serv_name" => "Tautulli"]);
+	$SickChilliIsInstalled = $MySB_DB->get("services", "is_installed", ["serv_name" => "Sickchill"]);
 	$PeerguardianIsInstalled = $MySB_DB->get("services", "is_installed", ["serv_name" => "PeerGuardian"]);
 	$NextCloudIsInstalled = $MySB_DB->get("services", "is_installed", ["serv_name" => "NextCloud"]);
 	$OpenVPNIsInstalled = $MySB_DB->get("services", "is_installed", ["serv_name" => "OpenVPN"]);
@@ -387,6 +388,13 @@ function MenuDisplayChildren($page, $current, $startmenu = true) {
 				case "Tautulli":
 					if ( ($TautulliIsInstalled == '1') && ($hidden == true) ) {
 						$link = 'https://' . $SystemDatas["hostname"] . ':' . $Port_HTTPs . '/tt/home';
+						$title = ($_SESSION['Language'] == 'en') ? $menu->title : $menu->title_fr;
+						echo '<li'. (in_array($menu->slug, explode('/', $current->url)) ? ' class="current"': null).'><a target="_blank" href="'.$link.'">'.$title.'</a>';
+					}
+					break;
+				case "SickChill":
+					if ( ($SickChillIsInstalled == '1') && ($hidden == true) ) {
+						$link = 'https://' . $SystemDatas["hostname"] . ':' . $Port_HTTPs . '/sc/home';
 						$title = ($_SESSION['Language'] == 'en') ? $menu->title : $menu->title_fr;
 						echo '<li'. (in_array($menu->slug, explode('/', $current->url)) ? ' class="current"': null).'><a target="_blank" href="'.$link.'">'.$title.'</a>';
 					}

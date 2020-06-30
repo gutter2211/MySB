@@ -29,6 +29,7 @@ cmdMySQL 'MySB_db' "UPDATE repositories SET upgrade = '1' WHERE name='ruTorrent'
 cmdMySQL 'MySB_db' "UPDATE repositories SET upgrade = '1' WHERE name='rTorrent';" -v
 cmdMySQL 'MySB_db' "UPDATE repositories SET upgrade = '1' WHERE name='LibTorrent';" -v
 cmdMySQL 'MySB_db' "UPDATE repositories SET upgrade = '1' WHERE name='Tautulli';" -v
+cmdMySQL 'MySB_db' "UPDATE repositories SET upgrade = '1' WHERE name='Sickchill';" -v
 # services
 cmdMySQL 'MySB_db' "UPDATE services SET to_install = '1', is_installed = '0' WHERE serv_name='Tautulli';" -v
 # users

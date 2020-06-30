@@ -23,6 +23,7 @@
 ##################### FIRST LINE #####################################
 
 UpdateTools_Plex=("Update of Plex Media Server & Tautulli")
+UpdateTools_SickChill=("Update of SickChill")
 UpdateTools_DockerTools=("Update of Docker's tools")
 UpdateTools_DNScrypt=("Update of DNScrypt-proxy")
 UpdateTools_Minio=("Update of S3's tools")

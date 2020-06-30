@@ -30,6 +30,7 @@ define('Home_MainUser', '
 		<li>Trackers usage</li>
 		<li>Activation of the usual and countries blacklists via PeerGuardian <span class="Comments">(if installed)</span></li>
 		<li>Access to <b>Tautulli</b> to view Plexmedia Server statistics <span class="Comments">(if installed)</span></li>
+		<li>Access to <b>SickChill</b> to view TvShows to download <span class="Comments">(if installed)</span></li>
 		<li>Access to <b>Shell</b> In a Box, an SSH console via a web page</li>
 		<li>Rental management <span class="Comments">(description, tax and cost of the server)</span>, and input of your users\' payments <span class="Comments">(It is advisable to set BEFORE adding new users)</span></li>
 		<li>SMTP management</li>

@@ -405,6 +405,17 @@ else
     echo -e "${Global_NothingToDo}"
 fi
 
+### SickChill
+((CurrentSTEP++))
+echo -e -n "${CBLUE}${CurrentSTEP}/${TotalSTEP}	- ${Upgrade_SickChill}${CEND}..."
+if [ "${gbToInstall_SickChill}" == "YES" ] || [ "${gbIsInstalled_SickChill}" == "YES" ] || (! gfnMd5Check "${MySB_InstallDir}/install/SickChill"); then
+    cmdMySQL 'MySB_db' "UPDATE services SET to_install = '1' WHERE serv_name='Sickchill';"
+    gfnScriptInvoke 'ScreenWAIT' "${MySB_InstallDir}/install/SickChill" 'UPGRADE'
+    gfnStatusSTD
+else
+    echo -e "${Global_NothingToDo}"
+fi
+
 #### NextCloud
 ((CurrentSTEP++))
 echo -e -n "${CBLUE}${CurrentSTEP}/${TotalSTEP}	- ${Upgrade_InstallingConfiguring} NextCloud${CEND}..."

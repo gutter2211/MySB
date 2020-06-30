@@ -44,6 +44,13 @@ if [ "${gbIsInstalled_PlexMedia}" == "YES" ]; then
     fi
 fi
 
+#### SickChill
+if [ "${gbIsInstalled_SickChill}" == "YES" ]; then
+    log_daemon_msg "${UpdateTools_SickChill[*]}"
+    gfnScriptInvoke 'ScreenSTD' "${MySB_InstallDir}/install/SickChill" 'CRON'
+    gfnStatusLSB
+fi
+
 #### DNScrypt-proxy
 if gfnCheckCommand 0 dnscrypt-proxy; then
     log_daemon_msg "${UpdateTools_DNScrypt[*]}"

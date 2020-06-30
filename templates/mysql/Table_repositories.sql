@@ -75,6 +75,8 @@ INSERT INTO `repositories` (`type`, `dir`, `name`, `version`, `upgrade`, `file`,
 ('GIT', '<InstallDir>/web/apps/cb', 'Cakebox-Light', '1.8.6', 0, 'cakebox-light_v1.8.6.zip', 'https://github.com/Cakebox/Cakebox-light.git', 1, 0, ''),
 ('TARGZ', '<InstallDir>/sources/netdata', 'NetData', '1.19.0', 0, 'netdata_v1.19.0.tar.gz', 'https://github.com/netdata/netdata/releases/download/v1.19.0/netdata-v1.19.0.tar.gz', 1, 0, ''),
 ('ZIP', '<InstallDir>/web/apps/nc', 'NextCloud', '18.0.0', 0, 'nextcloud_v18.0.0.zip', 'https://download.nextcloud.com/server/releases/nextcloud-18.0.0.zip', 1, 0, '');
+('TARGZ', '<InstallDir>/web/apps/sc', 'Sickchill', 'v2020.06.20-2', 0, 'v2020.06.20-2.tar.gz', 'https://github.com/SickChill/SickChill/archive/v2020.06.20-2.tar.gz', 1, 0, ''),
+
 /*!40000 ALTER TABLE `repositories` ENABLE KEYS */;
 UNLOCK TABLES;
 

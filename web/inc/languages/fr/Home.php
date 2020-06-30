@@ -30,6 +30,7 @@ define('Home_MainUser', '
 		<li>Gestion des trackers</li>
 		<li>Activation des listes noires usuelles et par pays via PeerGuardian <span class="Comments">(si install&eacute;)</span></li>
 		<li>Acc&egrave;s &agrave; <b>Tautulli</b> pour visualiser les statistiques de Plexmedia Server <span class="Comments">(si install&eacute;)</span></li>
+		<li>Acc&egrave;s &agrave; <b>SickChill</b> pour visualiser les seriesTV a telecharger <span class="Comments">(si install&eacute;)</span></li>
 		<li>Acc&egrave;s &agrave; <b>Shell In a Box</b>, une console SSH via une page web</li>
 		<li>Gestion locative <span class="Comments">(description, taxe et co&ucirc;t du serveur)</span>, et saisie des paiements de vos utilisateurs <span class="Comments">(Il est conseill&eacute; de param&eacute;trer AVANT d\'ajouter de nouveaux utilisateurs)</span></li>
 		<li>Gestion SMTP</li>
