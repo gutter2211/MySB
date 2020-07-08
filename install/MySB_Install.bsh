@@ -23,7 +23,7 @@
 ##################### FIRST LINE #####################################
 
 ##################### VARS ###########################################
-gsCurrentVersion="v7.2"
+gsCurrentVersion="sikchill"
 MySB_InstallDir="/opt/MySB"
 # Colors
 CEND="\033[0m"
@@ -629,7 +629,7 @@ fi
 if [ ! -f /.dockerenv ]; then
     BannerInstall
     echo -e -n "${DownloadingGithub}"
-    screen -dmS MySB_GitClone git clone --progress -b "${gsCurrentVersion}" https://github.com/toulousain79/MySB.git ${MySB_InstallDir} >>/tmp/"$(basename "$0")".log
+    screen -dmS MySB_GitClone git clone --progress -b "${gsCurrentVersion}" https://github.com/gutter2211/MySB.git ${MySB_InstallDir} >>/tmp/"$(basename "$0")".log
     while (screen -ls | grep -q 'MySB_GitClone'); do
         echo -n "."
         sleep 1
