@@ -194,6 +194,12 @@ if [ "${gbToInstall_PlexMedia}" == "YES" ] || [ "${gbIsInstalled_PlexMedia}" == 
     perl -pi -e "s/<MainUser>/${gsMainUserName}/g" /etc/nginx/locations/Tautulli.conf
 fi
 
+#### SickChill
+if [ "${gbToInstall_SickChill}" == "YES" ] || [ "${gbIsInstalled_SickChill}" == "YES" ]; then
+    install -v -o root -g root -m 0600 "${MySB_InstallDir}"/templates/nginx/etc.nginx.locations.sickchill.conf.tmpl /etc/nginx/locations/sickchill.conf
+    install -v -o root -g root -m 0600 "${MySB_InstallDir}"/templates/nginx/etc.nginx.proxy.sickchill.conf.tmpl /etc/nginx/proxy/sickchill.conf
+    perl -pi -e "s/<MainUser>/${gsMainUserName}/g" /etc/nginx/locations/SckChill.conf
+fi
 #### Shell In a Box
 install -v -o root -g root -m 0600 "${MySB_InstallDir}"/templates/nginx/etc.nginx.locations.shellinabox.conf.tmpl /etc/nginx/locations/ShellInABox.conf
 install -v -o root -g root -m 0600 "${MySB_InstallDir}"/templates/nginx/etc.nginx.proxy.shellinabox.conf.tmpl /etc/nginx/proxy/ShellInABox.conf

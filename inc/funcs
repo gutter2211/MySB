@@ -209,7 +209,7 @@ gfnManageServices() {
                                 systemctl stop dnscrypt-proxy.service >/dev/null
                                 gfnStatusLSB
                                 ;;
-                            "${binPhpService}" | "stunnel4" | "vsftpd" | "fail2ban" | "nfs-kernel-server" | "tautulli" | "plexmediaserver" | rtorrent-*)
+                            "${binPhpService}" | "stunnel4" | "vsftpd" | "fail2ban" | "nfs-kernel-server" | "tautulli" | "sickchill" | "plexmediaserver" | rtorrent-*)
                                 nContinue=0
                                 log_daemon_msg "${Funcs_Stopping} ${Service}"
                                 systemctl stop "${Service}".service
@@ -656,7 +656,11 @@ gfnManageDirAndFiles() {
             chown -R tautulli:tautulli "${MySB_InstallDir}"/web/apps/tt
             chmod 0760 "${MySB_InstallDir}"/web/apps/tt/*.py
         fi
-
+        # SickChill
+        if [ -d "${MySB_InstallDir}"/web/apps/sc ] && (grep -q 'sickchill' /etc/passwd); then
+            chown -R sickchill:tasickchillutulli "${MySB_InstallDir}"/web/apps/sc
+            chmod 0760 "${MySB_InstallDir}"/web/apps/sc/*.py
+        fi
         # ${MySB_InstallDir}/web/openvpn
         if [ -d "${MySB_InstallDir}"/web/openvpn ]; then chmod 0770 "${MySB_InstallDir}"/web/openvpn; fi
         # /home/MySB_share

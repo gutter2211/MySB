@@ -354,6 +354,15 @@ gfnInstallStepMessage "${CBLUE}${CurrentSTEP}/${TotalSTEP}	- ${MySB_InstallingCo
 gfnScriptInvoke 'ScreenWAIT' "${MySB_InstallDir}/install/Minio" 'INSTALL'
 gfnStatusSTD
 
+### SikChill
+((CurrentSTEP++))
+gfnInstallStepMessage "${CBLUE}${CurrentSTEP}/${TotalSTEP}	- ${MySB_InstallingConfiguring} SikChill${CEND}..."
+if [ "${gbToInstall_SikChill}" == "YES" ]; then
+    gfnScriptInvoke 'ScreenWAIT' "${MySB_InstallDir}/install/SikChill" 'INSTALL'
+    gfnStatusSTD
+else
+    echo -e "${Global_NothingToDo}"
+fi
 #
 ########## SERVICES - EoF ##########
 #

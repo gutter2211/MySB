@@ -185,7 +185,7 @@ define('User_UserInfo_Comment_MySB_DeleteUser', ' ');
 define('User_UserInfo_Table_SeedboxManage', 'SeedBox Management');
 define('User_UserInfo_Comment_MySB_UpgradeMe', 'Enables migration to a new version of MySB.');
 define('User_UserInfo_Comment_MySB_UpgradeSystem', 'Performs an update + upgrade + update-ca-certificates');
-define('User_UserInfo_Comment_MySB_UpdateTools', 'Check and execute an update for somme tools (Plex, Tautulli, Docker tools, ...)');
+define('User_UserInfo_Comment_MySB_UpdateTools', 'Check and execute an update for somme tools (Plex, Tautulli, SickChill, Docker tools, ...)');
 define('User_UserInfo_Comment_MySB_GitHubRepoUpdate', 'Updates the repository of the current version of MySB. (CRON every days)');
 define('User_UserInfo_Comment_MySB_SecurityRules', '<pre>MySB_SecurityRules (create|clean)</pre>');
 // Main scripts

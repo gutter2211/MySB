@@ -74,6 +74,10 @@ case "${1}" in
             echo "*/5 * * * * systemctl status plexmediaserver >/dev/null || systemctl restart plexmediaserver" | tee -a /tmp/crontab.tmp
             echo "*/5 * * * * systemctl status tautulli >/dev/null || systemctl restart tautulli" | tee -a /tmp/crontab.tmp
         fi
+        # SickChill
+        if gfnCheckCommand 0 sickchill; then
+            echo "*/5 * * * * systemctl status sickchill >/dev/null || systemctl restart sickchill" | tee -a /tmp/crontab.tmp
+        fi
         # NextCloud
         if [ "${gbIsInstalled_NextCloud}" == "YES" ]; then
             echo "*/5 * * * * /bin/bash ${MySB_InstallDir}/scripts/NextCloud.bsh scan CRON >/dev/null 2>&1" | tee -a /tmp/crontab.tmp
@@ -114,6 +118,8 @@ if [ "${gsSwitch}" != "STOP" ]; then
     fi
     # Plex & Tautulli
     (! gfnCheckCommand 0 plexmediaserver) && nJobsQty=$((nJobsQty - 2))
+    # SickChill
+    (! gfnCheckCommand 0 sickchill) && nJobsQty=$((nJobsQty - 2))
     # NextCloud
     [ "${gbIsInstalled_NextCloud}" != "YES" ] && nJobsQty=$((nJobsQty - 1))
     # PeerGuardian

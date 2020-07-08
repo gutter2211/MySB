@@ -175,6 +175,32 @@ fnUseOfCertificates() {
             sServicesToRestart="${sServicesToRestart} tautulli"
         fi
 
+        #### SickChill
+        gfnGetRepoValues 'SickChill'
+        if [ -f "${gsRepoDir}"/config.ini ]; then
+            gfnManageServices stop "sickchill"
+            nNumLine=$(grep 'pms_name' -n -m 1 "${gsRepoDir}"/config.ini | cut -d ':' -f 1)
+            sed -i '/pms_name/d' "${gsRepoDir}"/config.ini
+            sed -i "${nNumLine}i\pms_name = ${gsHostNameFqdn}" "${gsRepoDir}"/config.ini
+            nNumLine=$(grep 'http_base_url' -n -m 1 "${gsRepoDir}"/config.ini | cut -d ':' -f 1)
+            sed -i '/http_base_url/d' "${gsRepoDir}"/config.ini
+            sed -i "${nNumLine}i\http_base_url = https://${gsHostNameFqdn}:${gsPort_MySB_HTTPS}" "${gsRepoDir}"/config.ini
+            nNumLine=$(grep 'https_cert' -n -m 1 "${gsRepoDir}"/config.ini | cut -d ':' -f 1)
+            sed -i '/https_cert/d' "${gsRepoDir}"/config.ini
+            sed -i '/https_key/d' "${gsRepoDir}"/config.ini
+            sed -i '/https_cert_chain/d' "${gsRepoDir}"/config.ini
+            if [ -f "/etc/letsencrypt/live/${gsHostNameFqdn}/fullchain.pem" ] && [ -f "/etc/letsencrypt/live/${gsHostNameFqdn}/privkey.pem" ]; then
+                sed -i "${nNumLine}i\https_cert = /etc/letsencrypt/live/${gsHostNameFqdn}/cert.pem" "${gsRepoDir}"/config.ini
+                sed -i "${nNumLine}i\https_key = /etc/letsencrypt/live/${gsHostNameFqdn}/privkey.pem" "${gsRepoDir}"/config.ini
+                sed -i "${nNumLine}i\https_cert_chain = /etc/letsencrypt/live/${gsHostNameFqdn}/fullchain.pem" "${gsRepoDir}"/config.ini
+            else
+                sed -i "${nNumLine}i\https_cert = ${MySB_InstallDir}/ssl/mysb.cert" "${gsRepoDir}"/config.ini
+                sed -i "${nNumLine}i\https_key = ${MySB_InstallDir}/ssl/mysb.key" "${gsRepoDir}"/config.ini
+                sed -i "${nNumLine}i\https_cert_chain = " "${gsRepoDir}"/config.ini
+            fi
+            sServicesToRestart="${sServicesToRestart} sichckill"
+        fi
+
         #### Minio
         if [[ -d /etc/minio/certs/ ]]; then
             cp -f "/etc/letsencrypt/live/${gsHostNameFqdn}/privkey.pem" /etc/minio/certs/private.key

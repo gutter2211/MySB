@@ -255,6 +255,7 @@ gfnUpgradeInProgress() {
             [[ ${gbIsInstalled_OpenVPN} == "YES" ]] && sServicesToStop="${sServicesToStop} openvpn"
             [[ ${gbIsInstalled_PlexMedia} == "YES" ]] && sServicesToStop="${sServicesToStop} plexmediaserver"
             [[ ${gbIsInstalled_Tautulli} == "YES" ]] && sServicesToStop="${sServicesToStop} tautulli"
+            [[ ${gbIsInstalled_SickChill} == "YES" ]] && sServicesToStop="${sServicesToStop} sickchill"
             # Stop services
             gfnManageServices 'stop' "${sServicesToStop}"
             # rTorrent init
@@ -302,6 +303,7 @@ gfnUpgradeInProgress() {
             [[ ${gbIsInstalled_OpenVPN} == "YES" ]] && sServicesToStart="${sServicesToStart} openvpn"
             [[ ${gbIsInstalled_PlexMedia} == "YES" ]] && sServicesToStart="${sServicesToStart} plexmediaserver"
             [[ ${gbIsInstalled_Tautulli} == "YES" ]] && sServicesToStart="${sServicesToStart} tautulli"
+            [[ ${gbIsInstalled_SickChill} == "YES" ]] && sServicesToStart="${sServicesToStart} sickchill"
             # Stop services
             gfnManageServices 'stop' "nginx ${binPhpService}"
             # NginX
