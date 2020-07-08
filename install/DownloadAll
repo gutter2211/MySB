@@ -143,6 +143,11 @@ while read -r sRepoName; do
                 gfnRepoManageByType
             fi
             ;;
+        'SickChill')
+            if [ "${gbToInstall_SickChill}" == "YES" ] || [ "${gbIsInstalled_SickChill}" == "YES" ]; then
+                gfnRepoManageByType
+            fi
+            ;;
         'ruTorrent Plugin Link Manager')
             if [ "${gbToInstall_Manager}" == "YES" ] || [ "${gbIsInstalled_Manager}" == "YES" ]; then
                 gfnRepoManageByType

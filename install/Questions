@@ -542,10 +542,33 @@ DisplaySurvey() {
             sUdpPortsList="port_udp1='', port_udp2='', port_udp3='', ports_udp_list=''"
             sTcpPortsList="port_tcp1='', port_tcp2='', port_tcp3='', ports_tcp_list=''"
         fi
-        {
-            cmdMySQL 'MySB_db' "UPDATE services SET to_install='${bToInstall}', used='1', $sTcpPortsList, $sUdpPortsList WHERE serv_name='OpenVPN';" -v
-            cmdMySQL 'MySB_db' "UPDATE services SET to_install='${bToInstall}', used='1' WHERE serv_name='Samba' OR serv_name='NFS';" -v
-        } >>"${sLogFile}"
+        # SickChill server
+        if [ "${gbIsInstalled_SickChill}" != "YES" ]; then
+            echo
+            nLoop=1
+            if [ "${RepeatSurvey}" == "YES" ]; then
+                sValue="${gbToInstall_SickChill}"
+            else
+                sValue="${Global_YES}"
+            fi
+            while [[ ${nLoop} -eq 1 ]]; do
+                gfnQuestionGetString NO "$Questions_InstallSickChill" gbToInstall_SickChill "${sValue}"
+                gbToInstall_SickChill="$(echo "${gbToInstall_SickChill}" | tr '[:lower:]' '[:upper:]')"
+                case "${gbToInstall_SickChill}" in
+                    "${Global_NO}" | "${Global_YES}")
+                        nLoop=0
+                        ;;
+                esac
+            done
+
+            if [ "${gbToInstall_SickChill}" == "${Global_YES}" ]; then
+                bToInstall=1
+            else
+                bToInstall=0
+            fi
+            cmdMySQL 'MySB_db' "UPDATE services SET to_install='${bToInstall}', used='1' WHERE serv_name='SickChill';" -v >>"${sLogFile}"
+            unset sValue nLoop bToInstall
+        fi
         unset sValue nLoop bToInstall sTcpPortsList sUdpPortsList
     fi
 
@@ -909,6 +932,7 @@ ConfirmSurvey() {
         echo -e "$Summary_SeedboxManager" "${CGREEN}${gbToInstall_Manager}${CEND}"
         echo -e "$Summary_Cakebox" "${CGREEN}${gbToInstall_Cakebox}${CEND}"
         echo -e "$Summary_PlexMedia" "${CGREEN}${gbToInstall_PlexMedia}${CEND}"
+        echo -e "$Summary_SickChill" "${CGREEN}${gbToInstall_SickChill}${CEND}"
         echo -e "$Summary_Webmin" "${CGREEN}${gbToInstall_Webmin}${CEND}"
         if [ "${gbToInstall_Webmin}" == "${Global_YES}" ]; then
             echo -e "$Summary_WebminPort" "${CGREEN}${gsPorts_Webmin}${CEND}"

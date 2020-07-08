@@ -167,6 +167,7 @@ gfnGetPid() {
         "fail2ban") [ -f /var/run/fail2ban/fail2ban.pid ] && sPid="$(cat /var/run/fail2ban/fail2ban.pid)" ;;
         "webmin") [ -f /var/webmin/miniserv.pid ] && sPid="$(cat /var/webmin/miniserv.pid)" ;;
         "tautulli") [ -f /var/run/tautulli/tautulli.pid ] && sPid="$(cat /var/run/tautulli/tautulli.pid)" ;;
+        "sickchill") [ -f /var/run/sickchill/sickchill.pid ] && sPid="$(cat /var/run/sickchill/sickchill.pid)" ;;
         rtorrent-*) [ -f /var/run/"${1}".pid ] && sPid="$(cat "/var/run/${1}.pid")" ;;
         "ssh") sPid="$(pidof sshd)" ;;
         "pglcmd") sPid="$(pidof pgld)" ;;
@@ -276,6 +277,19 @@ gfnCheckCommand() {
                 fi
                 ;;
             'tautulli')
+                if [ -f "/lib/systemd/system/${2}.service" ]; then
+                    case "${1}" in
+                        0) return 0 ;;
+                        1) echo "YES" ;;
+                    esac
+                else
+                    case "${1}" in
+                        0) return 1 ;;
+                        1) echo "NO" ;;
+                    esac
+                fi
+                ;;
+            'sickchill')
                 if [ -f "/lib/systemd/system/${2}.service" ]; then
                     case "${1}" in
                         0) return 0 ;;
@@ -484,6 +498,15 @@ gfnGetRepoValues() {
                 gsVersionInstalled="$(cat "${gsRepoDir}"/release.lock)"
             elif [ -f "${gsRepoDir}"/plexpy/version.py ]; then
                 gsVersionInstalled="$(grep 'PLEXPY_RELEASE_VERSION' "${gsRepoDir}"/plexpy/version.py | cut -d '=' -f 2 | cut -d '"' -f 2)"
+            else
+                gsVersionInstalled="Not installed"
+            fi
+            gsVersionLatest="$(${binCURL} "${gsRepoURL}" | jq -r .tag_name)"
+            gsFileURL="$(${binCURL} "${gsRepoURL}" | grep 'tarball_url' | awk '{ print $2 }' | cut -d '"' -f 2)"
+            ;;
+        'SickChill')
+            if [ -f "${gsRepoDir}"/release.lock ]; then
+                gsVersionInstalled="$(cat "${gsRepoDir}"/release.lock)"
             else
                 gsVersionInstalled="Not installed"
             fi

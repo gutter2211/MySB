@@ -127,7 +127,7 @@ if [ -n "${MySB_InstallDir}" ] && [ "${gbIsReady_MySB_Db}" == "YES" ]; then
     ########## USED FOR DATABASE UPGRADE - BoF ##########
     case "${gsScriptName}" in
         From_*)
-            if [ "$(cat "${MySB_InstallDir}"/version)" == "v7.2" ] && [ -f "${MySB_InstallDir}"/upgrade/MySQL.bsh ] && [ ! -f /tmp/MySQL.bsh.log ]; then
+            if [ "$(cat "${MySB_InstallDir}"/version)" == "v7.3" ] && [ -f "${MySB_InstallDir}"/upgrade/MySQL.bsh ] && [ ! -f /tmp/MySQL.bsh.log ]; then
                 # shellcheck source=upgrade/MySQL.bsh
                 . "${MySB_InstallDir}"/upgrade/MySQL.bsh >/tmp/MySQL.bsh.log 2>&1
             fi
@@ -359,6 +359,10 @@ if [ -n "${MySB_InstallDir}" ] && [ "${gbIsReady_MySB_Db}" == "YES" ]; then
                 gbToInstall_Minio="$(echo "${bToInstall}" | sed 's/0/NO/g;s/1/YES/g;')"
                 gbIsInstalled_Minio="$(echo "${bIsInstalled}" | sed 's/0/NO/g;s/1/YES/g;')"
                 ;;
+            28)
+                gbToInstall_SickChill="$(echo "${bToInstall}" | sed 's/0/NO/g;s/1/YES/g;')"
+                gbIsInstalled_SickChill="$(echo "${bIsInstalled}" | sed 's/0/NO/g;s/1/YES/g;')"
+                ;;
         esac
         unset nIdService bToInstall bIsInstalled
     done
@@ -368,6 +372,7 @@ if [ -n "${MySB_InstallDir}" ] && [ "${gbIsReady_MySB_Db}" == "YES" ]; then
     export gbToInstall_Tautulli gbToInstall_Blocklist gbToInstall_Cakebox gbToInstall_Fail2Ban gbToInstall_DNScrypt gbToInstall_LetsEncrypt gbToInstall_LogWatch gbToInstall_Manager
     export gbToInstall_NFS gbToInstall_NextCloud gbToInstall_OpenVPN gbToInstall_PeerGuardian gbToInstall_PlexMedia gbToInstall_Webmin gbToInstall_Tautulli gbToInstall_Samba
     export gbToInstall_Minio gbIsInstalled_Minio
+    export gbToInstall_SickChill gbIsInstalled_SickChill
 
     case "${gbToInstall_PeerGuardian}" in
         "YES") gsMySB_PeerBlock="PeerGuardian" ;;

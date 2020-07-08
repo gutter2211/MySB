@@ -23,7 +23,7 @@
 ##################### FIRST LINE #####################################
 
 ##################### VARS ###########################################
-gsCurrentVersion="sikchill"
+gsCurrentVersion="v7.3"
 MySB_InstallDir="/opt/MySB"
 # Colors
 CEND="\033[0m"
@@ -693,6 +693,7 @@ if [ -f /.dockerenv ]; then
     cmdMySQL 'MySB_db' "UPDATE repositories SET active='${bToInstall}' WHERE name='CakeBox-Light' OR name='ruTorrent Plugin Link Cakebox';" -v
     cmdMySQL 'MySB_db' "UPDATE services SET to_install='${bToInstall}', used='1' WHERE serv_name='Plex Media Server';" -v
     cmdMySQL 'MySB_db' "UPDATE services SET to_install='${bToInstall}', used='1' WHERE serv_name='NextCloud';" -v
+    cmdMySQL 'MySB_db' "UPDATE services SET to_install='${bToInstall}', used='1' WHERE serv_name='SickChill';" -v
     cmdMySQL 'MySB_db' "UPDATE repositories SET active='${bToInstall}' WHERE name='NextCloud';" -v
     cmdMySQL 'MySB_db' "UPDATE services SET to_install='${bToInstall}', used='1', port_tcp1='${gsPorts_Webmin}' WHERE serv_name='Webmin';" -v
     cmdMySQL 'MySB_db' "UPDATE services SET to_install='${bToInstall}', used='1', $sTcpPortsList, $sUdpPortsList WHERE serv_name='OpenVPN';" -v

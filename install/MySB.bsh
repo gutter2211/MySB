@@ -354,6 +354,15 @@ gfnInstallStepMessage "${CBLUE}${CurrentSTEP}/${TotalSTEP}	- ${MySB_InstallingCo
 gfnScriptInvoke 'ScreenWAIT' "${MySB_InstallDir}/install/Minio" 'INSTALL'
 gfnStatusSTD
 
+### SickChill
+((CurrentSTEP++))
+gfnInstallStepMessage "${CBLUE}${CurrentSTEP}/${TotalSTEP}	- ${MySB_InstallingConfiguring} SickChill${CEND}..."
+if [ "${gbToInstall_SickChill}" == "YES" ]; then
+    gfnScriptInvoke 'ScreenWAIT' "${MySB_InstallDir}/install/SickChill" 'INSTALL'
+    gfnStatusSTD
+else
+    echo -e "${Global_NothingToDo}"
+fi
 #
 ########## SERVICES - EoF ##########
 #

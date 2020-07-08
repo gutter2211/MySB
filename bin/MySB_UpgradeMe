@@ -155,6 +155,17 @@ if [[ ${Continue} -eq 0 ]]; then
         rsync -a "$gsRepoDir"/logs /tmp/Tautulli/
         backup-manager-tools add "/tmp/Tautulli"
     fi
+    if [ "${gbIsInstalled_SickChill}" == "YES" ]; then
+        gfnGetRepoValues 'SickChill'
+        mkdir -p /tmp/SickChill
+        rsync -a "${gsRepoDir}"/sickbeard.db /tmp/SickChill/sickbeard.db
+        rsync -a "${gsRepoDir}"/cache.db /tmp/SickChill/cache.db
+        rsync -a "${gsRepoDir}"/failed.db /tmp/SickChill/failed.db
+        rsync -a "$gsRepoDir"/config.ini /tmp/SickChill/config.ini
+        rsync -a "$gsRepoDir"/backups /tmp/SickChill/
+        rsync -a "$gsRepoDir"/logs /tmp/SickChill/
+        backup-manager-tools add "/tmp/TautSickChillulli"
+    fi
     if [ "${gbIsInstalled_PlexMedia}" == "YES" ]; then
         mkdir -p /tmp/PlexMedia
         rsync -a /var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server/Plug-in\ Support /tmp/PlexMedia/

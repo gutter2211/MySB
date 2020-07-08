@@ -1,0 +1,129 @@
+SickChill#!/bin/bash
+# ----------------------------------
+# shellcheck source=inc/includes_before
+source "$(dirname "$0")"/../inc/includes_before
+# ----------------------------------
+#  __/\\\\____________/\\\\___________________/\\\\\\\\\\\____/\\\\\\\\\\\\\___
+#   _\/\\\\\\________/\\\\\\_________________/\\\/////////\\\_\/\\\/////////\\\_
+#	_\/\\\//\\\____/\\\//\\\____/\\\__/\\\__\//\\\______\///__\/\\\_______\/\\\_
+#	 _\/\\\\///\\\/\\\/_\/\\\___\//\\\/\\\____\////\\\_________\/\\\\\\\\\\\\\\__
+#	  _\/\\\__\///\\\/___\/\\\____\//\\\\\________\////\\\______\/\\\/////////\\\_
+#	   _\/\\\____\///_____\/\\\_____\//\\\____________\////\\\___\/\\\_______\/\\\_
+#		_\/\\\_____________\/\\\__/\\_/\\\______/\\\______\//\\\__\/\\\_______\/\\\_
+#		 _\/\\\_____________\/\\\_\//\\\\/______\///\\\\\\\\\\\/___\/\\\\\\\\\\\\\/__
+#		  _\///______________\///___\////__________\///////////_____\/////////////_____
+#			By toulousain79 ---> https://github.com/toulousain79/
+#
+######################################################################
+#
+#	Copyright (c) 2013 toulousain79 (https://github.com/toulousain79/)
+#	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#	The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+#	IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#	--> Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
+#
+##################### FIRST LINE #####################################
+local sRepoDirEscaped
+
+# Get SickChill infos
+gfnGetRepoValues 'SickChill'
+
+# Install packages
+sPackages=(unrar-free git-core openssl libssl-dev python2.7 python python-setuptools tzdata)
+gfnPackageBundleInstall "${sPackages[@]}"
+
+# VARs
+sRepoDirEscaped="${gsRepoDir//\//\\\/}"
+
+# Need upgrade or install ?
+if [ "${gbIsInstalled_SickChill}" == "NO" ] || [ "${gsVersionLatest}" != "${gsVersionInstalled}" ]; then
+
+    # Get file & Extract datas
+    echo "${MySB_Files}/${gsRepoFile}" "${MySB_Files}/${gsRepoFile}.tmp"
+    if [ -f "${MySB_Files}/${gsRepoFile}" ] && [ "${gsVersionLatest}" != "${gsVersionInstalled}" ]; then
+        mv -v "${MySB_Files}/${gsRepoFile}" "${MySB_Files}/${gsRepoFile}.tmp"
+    fi
+    gfnRepoManageByType
+    if [ -f "${MySB_Files}/${gsRepoFile}" ] && [ "${gsVersionLatest}" != "${gsVersionInstalled}" ]; then
+        rm -fv "${MySB_Files}/${gsRepoFile}.tmp"
+    fi
+
+    if [ -n "${gsRepoDir}" ] && [ -d "${gsRepoDir}" ]; then
+        [ "${gbIsInstalled_SickChill}" == "YES" ] && gfnManageServices stop "sickchill"
+
+        # Backup if needed
+        [ -f "${gsRepoDir}"/config.ini ] && mv -v "${gsRepoDir}"/config.ini "${MySB_InstallDir}"/temp/sickchill_conf
+        [ -f "${gsRepoDir}"/sickbeard.db ] && mv -v "${gsRepoDir}"/sickbeard.db "${MySB_InstallDir}"/temp/sickchill_db
+        [ -d "${gsRepoDir}"/backups ] && mv -v "${gsRepoDir}"/backups "${MySB_InstallDir}"/temp/sickchill_backups
+        [ -d "${gsRepoDir}"/logs ] && mv -v "${gsRepoDir}"/logs "${MySB_InstallDir}"/temp/sickchill_logs
+        [ -d "${gsRepoDir}"/cache ] && mv -v "${gsRepoDir}"/cache "${MySB_InstallDir}"/temp/sickchill_cache
+
+        # System user
+        (! grep -q 'sickchill' /etc/group) && addgroup sickchill
+        (! grep -q 'sickchill' /etc/passwd) && adduser --disabled-password --system --no-create-home sickchill --ingroup sickchill
+
+        if [ "${gbIsInstalled_SickChill}" == "YES" ]; then
+            # Remove datas
+            { [ -f "${MySB_Files}/${gsRepoFile}" ] && [ -d "${gsRepoDir}" ]; } && gfnDeleteDirectory 1 "${gsRepoDir}"
+
+            # Extract datas
+            gfnRepoManageByType
+        fi
+        pip install -r "${MySB_InstallDir}"/requirements.txt
+	pip install cffi==1.14.0
+        # Restore if needed
+        [ -f "${MySB_InstallDir}"/temp/sickchill_conf ] && mv -v "${MySB_InstallDir}"/temp/sickchill_conf "${gsRepoDir}"/config.ini
+        [ -f "${MySB_InstallDir}"/temp/sickchill_db ] && mv -v "${MySB_InstallDir}"/temp/sickchill_db "${gsRepoDir}"/sickbeard.db
+        [ -d "${MySB_InstallDir}"/temp/sickchill_backups ] && mv -v "${MySB_InstallDir}"/temp/sickchill_backups "${gsRepoDir}"/backups
+        [ -d "${MySB_InstallDir}"/temp/sickchill_logs ] && mv -v "${MySB_InstallDir}"/temp/sickchill_logs "${gsRepoDir}"/logs
+        [ -d "${MySB_InstallDir}"/temp/sickchill_cache ] && mv -v "${MySB_InstallDir}"/temp/sickchill_cache "${gsRepoDir}"/cache
+
+        # # Directories
+        # [ ! -d "${gsRepoDir}"/backups ] && mkdir "${gsRepoDir}"/backups
+        # [ ! -d "${gsRepoDir}"/logs ] && mkdir "${gsRepoDir}"/logs
+        # [ ! -d "${gsRepoDir}"/cache ] && mkdir "${gsRepoDir}"/cache
+        # Directory rights
+        chown -R sickchill:sickchill "${gsRepoDir}"
+        chmod +w "${gsRepoDir}"/config.ini
+        # Systemd
+        install -v -o root -g root -m 0644 "${MySB_InstallDir}"/templates/sickchill/sickchill.service.tmpl /lib/systemd/system/sickchill.service
+        perl -pi -e "s/<gsRepoDir>/${sRepoDirEscaped}/g" /lib/systemd/system/sickchill.service
+        systemctl daemon-reload
+        systemctl enable sickchill.service
+
+        # NginX
+        install -v -o root -g root -m 0600 "${MySB_InstallDir}"/templates/nginx/etc.nginx.locations.sickchill.conf.tmpl /etc/nginx/locations/SickChill.conf
+        install -v -o root -g root -m 0600 "${MySB_InstallDir}"/templates/nginx/etc.nginx.proxy.sickchill.conf.tmpl /etc/nginx/proxy/SickChill.conf
+        perl -pi -e "s/<MainUser>/${gsMainUserName}/g" /etc/nginx/locations/SickChill.conf
+
+        # Update certificates for Python
+        update-ca-certificates --fresh &>/dev/null
+
+        # START/STOP service for creating config.ini
+        systemctl start sickchill.service
+        systemctl status sickchill.service
+        sleep 1
+        systemctl stop sickchill.service
+        sleep 1
+
+        nNumLine=$(grep 'web_root =' -n -m 1 "${gsRepoDir}"/config.ini | cut -d ':' -f 1)
+        sed -i '/web_root =/d' "${gsRepoDir}"/config.ini
+        sed -i "${nNumLine}i\web_root = /sc" "${gsRepoDir}"/config.ini
+        # START services
+        gfnManageServices start "nginx sickchill"
+
+    fi
+else
+    echo "SickChill version ${gsRepoVersion} is already installed"
+fi
+
+if [ -f "${gsRepoDir}"/SickBeard.py ]; then
+    # Update DB
+    cmdMySQL 'MySB_db' "UPDATE services SET to_install = '0', is_installed = '1' WHERE serv_name='SickChill';" -v
+fi
+# -----------------------------------------
+# shellcheck source=inc/includes_after
+source "$(dirname "$0")"/../inc/includes_after
+# -----------------------------------------
+##################### LAST LINE ######################################

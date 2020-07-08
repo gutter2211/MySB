@@ -99,6 +99,7 @@ Questions_ServerProvider="Quelle est le fournisseur de votre serveur ? "
 Questions_InstallSeedboxManager="Voulez-vous installer Seedbox-Manager ? (${Global_YES}/${Global_NO})"
 Questions_InstallCakeBox="Voulez-vous installer CakeBox Light ? (${Global_YES}/${Global_NO}) "
 Questions_InstallPlexMedia="Voulez-vous installer Plex Media Server ? (${Global_YES}/${Global_NO}) "
+Questions_InstallSickChill="Voulez-vous installer SickChill ? (${Global_YES}/${Global_NO}) "
 Questions_InstallWebmin="Voulez-vous installer Webmin ? (${Global_YES}/${Global_NO}) "
 Questions_PortWebmin="Port pour Webmin (habituellement 10000): "
 Questions_InstallOpenVPN="Voulez-vous installer OpenVPN ? (${Global_YES}/${Global_NO}) "
@@ -157,6 +158,7 @@ Summary_ServerProvider="${CBLUE}Fournisseur (supervision) : ${CEND}"
 Summary_SeedboxManager="${CBLUE}Installer Seedbox-Manager : ${CEND}"
 Summary_Cakebox="${CBLUE}Installer Cakebox-Light : ${CEND}"
 Summary_PlexMedia="${CBLUE}Installer Plexmedia Server : ${CEND}"
+Summary_SickChill="${CBLUE}Installer SickChill : ${CEND}"
 Summary_Webmin="${CBLUE}Installer Webmin : ${CEND}"
 Summary_WebminPort="${CBLUE}Port pour Webmin : ${CEND}"
 Summary_NextCloud="${CBLUE}Installer NextCloud : ${CEND}"
@@ -186,14 +188,14 @@ export Questions_Message_LetsEncrypt Questions_HttpOpened Questions_Message_IpRe
 export Questions_Message_SMTP_0 Questions_SMTP Questions_SMTP_Username Questions_SMTP_Password Questions_Message_SMTP_1 Questions_EmailAddress Questions_TimeZone
 export Questions_PrimaryNetwork Questions_BoxIpAddress Questions_BoxIpAddressAdditional Questions_BoxIpAddressExt
 export Questions_PortHTTP Questions_PortHTTPs Questions_PortSSH Questions_PortFTPs Questions_PortFTPData Questions_Message_ServerProvider
-export Questions_ServerProvider Questions_InstallSeedboxManager Questions_InstallCakeBox Questions_InstallPlexMedia Questions_InstallWebmin Questions_PortWebmin
+export Questions_ServerProvider Questions_InstallSeedboxManager Questions_InstallCakeBox Questions_InstallPlexMedia Questions_InstallSickChill Questions_InstallWebmin Questions_PortWebmin
 export Questions_InstallOpenVPN Questions_PortOpenvpnTUNwithGW Questions_PortOpenvpnTUNwithoutGW Questions_PortOpenvpnTAPwithoutGW Questions_ProtoOpenVPN
 export Questions_InstallNextCloud Questions_ContinueInstall Questions_InstallLogwatch Questions_InstallFail2Ban Questions_Message_Blocklists
 export Questions_Message_Blocklists_0 Questions_Message_Blocklists_1 Questions_InstallBlockList_0 Questions_InstallBlockList_1 Questions_InstallDNScrypt
 export Questions_Message_Statistics Questions_SendStatistics
 export Summary_Language Summary_MainUser Summary_MainUserPass Summary_SmtpProvider Summary_SmtpUsername Summary_SmtpPassword Summary_MainUserMail
 export Summary_TimeZone Summary_PrimaryInet Summary_SrvIpAddress Summary_SrvIpAddressExt Summary_gsHostNameFqdn Summary_PortHTTPs Summary_Port_SSH Summary_Port_FTP
-export Summary_ServerProvider Summary_SeedboxManager Summary_Cakebox Summary_PlexMedia Summary_Webmin Summary_WebminPort Summary_NextCloud Summary_OpenVPN
+export Summary_ServerProvider Summary_SeedboxManager Summary_Cakebox Summary_PlexMedia Summary_SickChill Summary_Webmin Summary_WebminPort Summary_NextCloud Summary_OpenVPN
 export Summary_gsOpenVPN_Proto Summary_OpenVPN_WithGW Summary_OpenVPN_WithoutGW Summary_OpenVPN_TAP_WithoutGW
 export Summary_HttpPortOpend Summary_IpRestriction Summary_MainUserIPs Summary_InstallLogWatch Summary_InstallFail2Ban Summary_InstallDNScrypt Summary_PeerBlock
 export Summary_Statistics Summary_ConfirmMessage Summary_Confirm
