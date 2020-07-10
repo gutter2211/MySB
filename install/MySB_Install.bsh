@@ -730,7 +730,7 @@ else
     # Start install script
     echo -e "${StartingScreen}"
     screen -wipe >>/tmp/"$(basename "$0")".log
-    screen -dmS MySB_bsh /bin/bash "${MySB_InstallDir}"/install/MySB.bsh
+    screen -L -Logfile /var/log/installlog.txt -dmS MySB_bsh /bin/bash "${MySB_InstallDir}"/install/MySB.bsh
     echo -e -n "${PleaseWait}"
     fnCountDown 5
     screen -r MySB_bsh
