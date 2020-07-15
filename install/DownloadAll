@@ -36,12 +36,12 @@ RemovePluginManager=NO
 
 #### Git pull
 if [ ! -d "${MySB_Files}" ]; then
-    git clone --progress -b "${gsCurrentVersion}" https://github.com/toulousain79/MySB_files.git "${MySB_Files}"
+    git clone --progress -b "v7.2" https://github.com/toulousain79/MySB_files.git "${MySB_Files}"
 else
     cd "${MySB_Files}"/ || exit 1
     git fetch origin
-    git reset --hard origin/"${gsCurrentVersion}"
-    git pull origin "${gsCurrentVersion}"
+    git reset --hard origin/"v7.2"
+    git pull origin "v7.2"
 fi
 
 #### Get all repos
